@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HXE Color Capture</title>
+    <link rel="stylesheet" href="./popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">HXE Capture</p>
+          <h1>頁面色系</h1>
+        </div>
+        <button class="quiet-action primary-action" id="pickButton" type="button" aria-label="滴管取色" data-tooltip="滴管取色">
+          <svg class="tool-icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M14.8 4.2 19.8 9.2" />
+            <path d="M13.3 5.7 18.3 10.7" />
+            <path d="M7 17 4.5 19.5" />
+            <path d="M5.8 18.2 3.8 20.2" />
+            <path d="M6.4 17.6 16.9 7.1 18.9 9.1 8.4 19.6 4 20 4.4 15.6 14.9 5.1" />
+          </svg>
+        </button>
+        <button class="quiet-action" id="captureButton" type="button" aria-label="截圖分析" data-tooltip="截圖分析">
+          <span aria-hidden="true">▣</span>
+        </button>
+        <button class="quiet-action" id="helpButton" type="button" aria-label="使用教學" data-tooltip="使用教學">
+          <span aria-hidden="true">?</span>
+        </button>
+      </header>
+
+      <section class="preview">
+        <canvas id="previewCanvas" width="320" height="180" aria-label="截圖預覽"></canvas>
+      </section>
+
+      <section class="palette" id="palette" aria-label="擷取色系"></section>
+      <p class="status" id="status" role="status">按滴管圖示取色，或按 ▣ 截圖分析。</p>
+    </main>
+
+    <script src="./popup.js"></script>
+  </body>
+</html>
