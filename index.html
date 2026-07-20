@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HXE 色碼工具</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%233f7d58'/%3E%3Cpath d='M16 20h32v8H27v8h17v8H16z' fill='%23fffdfa'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <button class="drawer-fab" id="openDrawer" type="button" aria-label="開啟色系側欄" title="開啟色系側欄">＋</button>
+      <button class="help-fab quiet-action" id="openHelp" type="button" aria-label="使用教學" data-tooltip="使用教學">
+        <span aria-hidden="true">?</span>
+      </button>
+      <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+      <aside class="palette-drawer" id="paletteDrawer" aria-label="色系側欄" aria-hidden="true">
+        <div class="drawer-head">
+          <div>
+            <p class="eyebrow">HXE Library</p>
+            <h2>色系探索</h2>
+          </div>
+          <button class="icon-button" id="closeDrawer" type="button" aria-label="關閉色系側欄" title="關閉色系側欄">×</button>
+        </div>
+        <div class="drawer-tabs" id="paletteCategories" aria-label="色系分類"></div>
+        <div class="drawer-list" id="paletteLibrary"></div>
+      </aside>
+
+      <div class="help-backdrop" id="helpBackdrop" hidden></div>
+      <section class="help-panel" id="helpPanel" aria-label="使用教學" aria-hidden="true" role="dialog">
+        <div class="help-head">
+          <div>
+            <p class="eyebrow">HXE Guide</p>
+            <h2>使用教學</h2>
+          </div>
+          <button class="icon-button quiet-action" id="closeHelp" type="button" aria-label="關閉使用教學" data-tooltip="關閉">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <ol class="help-steps">
+          <li>
+            <span>01</span>
+            <div>
+              <h3>輸入或貼上色碼</h3>
+              <p>支援 HEX、RGB、HSL；也可以用左側色塊直接選色。</p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>停留看提示</h3>
+              <p>小圖示平常保持安靜，滑鼠停一下會出現貼上、複製、套用等說明。</p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>拖曳調整工作區</h3>
+              <p>中間與右側分隔線可拖曳，雙擊分隔線可重置版面。</p>
+            </div>
+          </li>
+          <li>
+            <span>04</span>
+            <div>
+              <h3>探索與截圖取色</h3>
+              <p>左下角＋可開啟色系庫；Chrome 外掛可用滴管取色，也可截圖分析頁面色系。</p>
+            </div>
+          </li>
+        </ol>
+        <div class="help-actions">
+          <button class="quiet-action" id="finishHelp" type="button" aria-label="完成教學" data-tooltip="完成">
+            <span aria-hidden="true">✓</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="HXE 色碼工具">
+        <div class="preview-panel">
+          <div class="toolbar">
+            <div>
+              <p class="eyebrow">HXE Color</p>
+              <h1>色碼工具</h1>
+            </div>
+            <button class="icon-button" id="randomColor" type="button" aria-label="隨機顏色" title="隨機顏色">
+              <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+
+          <div class="color-stage">
+            <input id="colorPicker" type="color" value="#3f7d58" aria-label="選擇顏色" />
+            <div class="color-card" id="colorCard">
+              <div class="sample-text">
+                <strong id="sampleTitle">HXE</strong>
+                <span id="sampleCopy">Color system preview</span>
+              </div>
+            </div>
+          </div>
+
+          <label class="input-label" for="colorInput">輸入色碼</label>
+          <div class="input-row">
+            <input
+              id="colorInput"
+              autocomplete="off"
+              spellcheck="false"
+              value="#3f7d58"
+              aria-describedby="inputHint"
+            />
+            <button class="quiet-action" id="pasteButton" type="button" aria-label="貼上" data-tooltip="貼上">
+              <span aria-hidden="true">⇩</span>
+            </button>
+          </div>
+          <p class="hint" id="inputHint">支援 HEX、RGB、HSL，例如 #3f7d58、rgb(63 125 88)、hsl(143 33% 37%)。</p>
+          <p class="error" id="errorMessage" role="alert" hidden></p>
+
+          <section class="daily-card" id="dailyRecommendation" aria-label="今日推薦"></section>
+        </div>
+
+        <button
+          class="resize-handle resize-handle-x"
+          id="mainResize"
+          type="button"
+          aria-label="調整左右面板寬度"
+          title="調整左右面板寬度"
+        ></button>
+
+        <div class="details-panel">
+          <section class="module" aria-label="色碼格式">
+            <div class="module-head">
+              <h2>格式</h2>
+              <button class="small-button quiet-action" id="copyAll" type="button" aria-label="複製全部" data-tooltip="複製全部">
+                <span aria-hidden="true">⧉</span>
+              </button>
+            </div>
+            <div class="formats" id="formats"></div>
+          </section>
+
+          <button
+            class="resize-handle resize-handle-y"
+            data-resize-y="format"
+            type="button"
+            aria-label="調整格式與文字可讀性區塊高度"
+            title="調整格式與文字可讀性區塊高度"
+          ></button>
+
+          <section class="module readability-module" aria-label="文字可讀性">
+            <div class="module-title-block">
+              <h2>文字可讀性</h2>
+              <p>判斷目前顏色適合放在白底或深底上。</p>
+            </div>
+            <div class="contrast-grid">
+              <button class="contrast-tile" id="lightContrast" type="button"></button>
+              <button class="contrast-tile" id="darkContrast" type="button"></button>
+            </div>
+          </section>
+
+          <button
+            class="resize-handle resize-handle-y"
+            data-resize-y="contrast"
+            type="button"
+            aria-label="調整文字可讀性與色階區塊高度"
+            title="調整文字可讀性與色階區塊高度"
+          ></button>
+
+          <section class="module" aria-label="色階">
+            <div class="module-head">
+              <h2>色階</h2>
+              <button class="small-button quiet-action" id="copyPalette" type="button" aria-label="複製色階" data-tooltip="複製色階">
+                <span aria-hidden="true">⧉</span>
+              </button>
+            </div>
+            <div class="palette" id="palette"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./palettes.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
