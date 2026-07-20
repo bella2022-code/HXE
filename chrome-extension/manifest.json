@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "HXE Color Capture",
+  "description": "Pick a color with the eyedropper or capture the current tab palette.",
+  "version": "0.1.1",
+  "action": {
+    "default_title": "HXE Color Capture",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["<all_urls>"]
+}
